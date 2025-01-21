@@ -3,6 +3,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
+import Warehouse from "./Warehouse";
 
 function Index() {
   return (
@@ -23,9 +24,12 @@ function Index() {
             </PrivateRoute>
           }
         />
+        <Route path="warehouse" element={<Warehouse />}/>
+
 
         {/* Redirect to Login by default */}
         <Route path="*" element={<Login />} />
+
       </Routes>
     </Router>
   );

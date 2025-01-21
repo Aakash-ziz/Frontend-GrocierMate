@@ -1,58 +1,62 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import Home from "./contents/Home";
-import Selling from "./contents/Selling";
-import Buying from "./contents/Buying";
+import React, { useState } from 'react';
+import Home from './Home';
+import Selling from './Selling';
+import Buying from './Buying';
 
-function Dashboard() {
-  const navigate = useNavigate();
-  const [activePage, setActivePage] = useState("home");
+const Dashboard = () => {
+  // State to track active component
+  const [activeComponent, setActiveComponent] = useState('home'); // Default is 'home'
 
-  const handleNavigation = (page) => {
-    setActivePage(page);
-    navigate(`/${page}`);
+  // Function to render the active component
+  const renderComponent = () => {
+    switch (activeComponent) {
+      case 'home':
+        return <Home />;
+      case 'selling':
+        return <Selling />;
+      case 'buying':
+        return <Buying />;
+      default:
+        return <Home />;
+    }
   };
 
   return (
-    <div>
-      {/* Navbar */}
-      <nav className="bg-gray-800 text-white p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          {/* Logo */}
-          <div className="text-2xl font-bold">Grociermate</div>
-          {/* Links */}
-          <div className="space-x-4">
-            <button
-              onClick={() => handleNavigation("home")}
-              className="hover:text-gray-300 transition-colors"
-            >
-              Home
-            </button>
-            <button
-              onClick={() => handleNavigation("selling")}
-              className="hover:text-gray-300 transition-colors"
-            >
-              Selling
-            </button>
-            <button
-              onClick={() => handleNavigation("buying")}
-              className="hover:text-gray-300 transition-colors"
-            >
-              Buying
-            </button>
-          </div>
-        </div>
-      </nav>
+    <div className="p-8 bg-gray-100 min-h-screen">
+      {/* Navigation */}
+      <div className="flex justify-center gap-6 mb-6">
+        <button
+          onClick={() => setActiveComponent('home')}
+          className={`px-6 py-2 rounded-lg text-white font-medium ${
+            activeComponent === 'home' ? 'bg-blue-600' : 'bg-gray-400 hover:bg-gray-500'
+          }`}
+        >
+          Home
+        </button>
+        <button
+          onClick={() => setActiveComponent('selling')}
+          className={`px-6 py-2 rounded-lg text-white font-medium ${
+            activeComponent === 'selling' ? 'bg-blue-600' : 'bg-gray-400 hover:bg-gray-500'
+          }`}
+        >
+          Selling
+        </button>
+        <button
+          onClick={() => setActiveComponent('buying')}
+          className={`px-6 py-2 rounded-lg text-white font-medium ${
+            activeComponent === 'buying' ? 'bg-blue-600' : 'bg-gray-400 hover:bg-gray-500'
+          }`}
+        >
+          Buying
+        </button>
+      </div>
 
-      {/* Main Content */}
-      <div className="container mx-auto mt-8 p-4">
-        {/* Render the appropriate component based on the active page */}
-        {activePage === "home" && <Home />}
-        {activePage === "selling" && <Selling />}
-        {activePage === "buying" && <Buying />}
+      {/* Content Area */}
+      <div className="bg-white shadow-md rounded-lg p-6">
+        {renderComponent()}
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;
